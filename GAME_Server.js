@@ -3,8 +3,8 @@ var GAME = {};
 
 /**
  * pass in {string} record key and the model from which to fetch it 
+ * This will return
  */
-
 
 GAME.getRecordData = function (record_key, model) {
   app.models[model].getRecord(record_key);
