@@ -1,6 +1,11 @@
 
 var GAME = {}; 
 
+/**
+ * pass in {string} record key and the model from which to fetch it 
+ */
+
+
 GAME.getRecordData = function (record_key, model) {
   app.models[model].getRecord(record_key);
   var record_obj = record.record; 
