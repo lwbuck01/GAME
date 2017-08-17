@@ -2,37 +2,34 @@
 var GAME = {}; 
 
 /**
- * pass in {string} record key and the model from which to fetch it 
- * This will return
+ * pass in {string} record json  and the model from which to fetch it 
+ * This will return a clean (non-cyclic) record obj
  */
-
-GAME.getRecordData = function (record_key, model) {
-  app.models[model].getRecord(record_key);
+GAME.extractData = function (record) {
+  
+  // set a record object 
   var record_obj = record.record; 
+  
+  // get the keys for the field values of the record_obj
   var keys = Object.keys(record_obj.data);   
   
   // keys for getting real field name values
-  var name_keys = Object.keys(record.J.Jb); 
+  var name_keys = Object.keys(record.J.Jb);
    
-  // get the field names first, then match
+
   var field_names = [];
   for (var q = 0; q < keys.length; q++) {
-    console.log('name key is: ' + name_keys[q]); 
-    console.log('real value is: ' + record.J.Jb[String(name_keys[q])].name);
     field_names.push(record.J.Jb[String(name_keys[q])].name);  
   }
-  
-  // perfect record to return 
-  var perf_record = new Object(); 
+
+  var perf_record = {}; 
   
   for (var i = 0; i < keys.length; i++) {
     var this_key = keys[i]; // cryptic key 
     var this_value = record.record.data[String(keys[i])];
-    console.log('this key: ' + this_key +  ' : ' + this_value); 
    
-    // set new object field names and values 
-    perf_record[String(field_names[i])] = this_value;  // sorting ok                                                       
+    perf_record[String(field_names[i])] = this_value;  
   }
   
-  return JSON.stringify(perf_record);    
+  return perf_record;
 }
