@@ -33,3 +33,24 @@ GAME.extractData = function (record) {
   
   return perf_record;
 }
+
+GAME.getRecords = function(job_id, model) {
+  var query = app.models[model].newQuery();
+  
+  // hard-coded id, fix
+  query.filters.ID._equals = job_id; 
+  
+  var records = query.run();
+  
+  var return_records = []; 
+  
+  for(var record_index = 0; record_index < records.length; record_index++) {
+     var extracted_record = extractData(records[record_index]); 
+     return_records.push(extracted_record); 
+  }
+    
+  console.log(return_records.length + ' clean records');
+  
+  // return clean records
+  return return_records; 
+}
